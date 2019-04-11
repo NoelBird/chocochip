@@ -3,6 +3,7 @@
 buf1 = []
 buf2 = []
 
+@profile
 def nq(l, idx, max_idx):
     global buf1
     global buf2
