@@ -13,4 +13,6 @@
 
 ## 정렬
 1. [Selection Sort](sort/selection_sort.cpp)
-2. 
+2. [Bubble Sort](sort/bubble_sort.cpp)
+3. [Insertion Sort](sort/insertion_sort.cpp)
+4. [Merge Sort](sort/merge_sort.cpp)
