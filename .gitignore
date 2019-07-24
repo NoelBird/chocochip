@@ -1,3 +1,6 @@
 .vscode/
+.idea/
+.venv/
+venv/
 *.pyc
 boj/*/data.txt
