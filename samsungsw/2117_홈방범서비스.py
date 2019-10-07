@@ -2,7 +2,16 @@ def find_max_at_point(map_vlg, N, M, cur_pos, size_rhombus):
     x = cur_pos[0]
     y = cur_pos[1]
 
-    expense = (size_rhombus+1)**2 + (size_rhombus)**2
+    # if size_rhombus == 1:
+    #     if x >= 0 and x < N and y >= 0 and y < N and map_vlg[y][x]:
+    #         return 1
+    #     else:
+    #         return 0
+
+    if size_rhombus == 1:
+        expense = 1
+    else:
+        expense = (size_rhombus+1)**2 + (size_rhombus)**2
     profit = 0
     cnt_house = 0
     for du in range(-size_rhombus, size_rhombus+1, 2):
@@ -32,8 +41,8 @@ def find_max_at_point(map_vlg, N, M, cur_pos, size_rhombus):
 def find_max(map_vlg, N, M):
     i_max = 0
     for size_rhombus in range(2*N-1, 0, -1):
-        for x in range(N-(size_rhombus+1)//2+2):
-            for y in range(N-(size_rhombus+1)//2+2):
+        for x in range(N-(size_rhombus)//2+2):
+            for y in range(N-(size_rhombus)//2+2):
                 i_val = find_max_at_point(map_vlg, N, M, (x, y), size_rhombus)
                 if i_val > i_max:
                     i_max = i_val

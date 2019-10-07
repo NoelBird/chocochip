@@ -6,16 +6,14 @@ int gcd(int a, int b);
 
 int main() {
 	int a, b;
-	int k;
 	int ans;
 
-	cin >> k;
-	for (int i = 0; i < k; i++) {
-		cin >> a;
-		cin >> b;
-		ans = gcd(a, b);
-		cout << a * b / ans << endl;
-	}
+	cin >> a;
+    cin >> b;
+    ans = gcd(a, b);
+
+    cout << ans << endl;
+    cout << a * b / ans << endl;
 	return 0;
 }
 
