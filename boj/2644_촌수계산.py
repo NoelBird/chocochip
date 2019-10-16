@@ -1,15 +1,3 @@
-# 9
-# 7 3
-# 7
-# 1 2
-# 1 3
-# 2 7
-# 2 8
-# 2 9
-# 4 5
-# 4 6
-
-
 class Node:
     def __init__(self, val):
         self.val = val
@@ -19,12 +7,6 @@ class Node:
         self.parent = parent
 
 
-
-
-# 입력 부분
-# 구해야 하는 사람들 간의 촌수 받기
-# 전체 사람의 수 입력 받기
-# 총 인원의 수 입력 받기
 n = int(input()) # 전체 사람의 수
 a, b = map(int, input().split())
 m = int(input()) # 부모와 자식 간의 관계 개수
@@ -67,7 +49,4 @@ set_b = set(l_b)
 if len(set_a.intersection(set_b)):
     set_c = set_a.difference(set_b)
     set_c.update(set_b.difference(set_a))
-    # print(set_c)
-    # print(l_b)
-    # print(set(l_a).intersection(set(l_b)))
     print(len(set_c))
