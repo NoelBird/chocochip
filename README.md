@@ -2,6 +2,7 @@
 
 my algorithm collections
 
-- [applications](GeeksForGeeks/)
-- [algorithms](algorithms/)
+- [algorithm theories](algorithms/)
+- [problems/contests](sites/)
+
 
