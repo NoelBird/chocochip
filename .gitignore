@@ -1,0 +1,12 @@
+.vscode/
+.idea/
+.venv/
+venv/
+deep_learning/
+todo-list/
+*.pyc
+boj/*/data.txt
+*.lprof
+*.exe
+*.txt
+*.pb

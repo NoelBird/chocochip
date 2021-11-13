@@ -1,5 +1,7 @@
 # chocochip
 
-my precious algorithm collections
+my algorithm collections
 
-leet code
+- [applications](GeeksForGeeks/)
+- [algorithms](algorithms/)
+
