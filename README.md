@@ -2,6 +2,6 @@
 
 my algorithm collections
 
-- [applications](GeeksForGeeks/)
+- [applications](sites/)
 - [algorithms](algorithms/)
 
