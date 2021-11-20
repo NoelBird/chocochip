@@ -1,4 +1,9 @@
 #include<algorithm>
+// TLE
+#include<vector>
+#include<stdio.h>
+
+using namespace std;
 
 class Solution {
 public:
