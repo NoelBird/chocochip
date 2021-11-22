@@ -1,32 +1,15 @@
-// for-loop-counter in solution function was incorrect.
-// solved by (10 => 600)
-
 #include<stdio.h>
+#include<cstring>
 #include<vector>
 #include<queue>
 #define MAX_LEN 300
 // constexpr int MAX_LEN=301;
 
 using namespace std;
-// TODO: fix check union function
 
 // variables
 int _mat[MAX_LEN][MAX_LEN] = {0,};
-
-
-// functions
-void printMat(int M, int N)
-{
-    for(int i=0; i<M; ++i)
-    {
-        for(int j=0; j<N; ++j)
-        {
-            printf("%d ", _mat[i][j]);
-        }
-        printf("\n");
-    }
-    printf("\n");
-}
+bool _matVisited[MAX_LEN][MAX_LEN] = {false,};
 
 int updateStep(int M, int N)
 {
@@ -58,7 +41,6 @@ int updateStep(int M, int N)
             if(_mat[i][j] > 0) isEnd = false;
         }
     }
-    // printMat(M, N);
     if(_sum == 0) return true;
     
     
@@ -67,7 +49,7 @@ int updateStep(int M, int N)
 
 bool checkUnion(int M, int N)
 {
-    bool _matVisited[MAX_LEN][MAX_LEN] = {false,};
+    memset(_matVisited, 0, sizeof(_matVisited));
     queue<pair<int, int> > q;
 
     // find not zero
@@ -130,13 +112,6 @@ bool checkUnion(int M, int N)
 
 int solution(int M, int N)
 {
-    // simulation
-    // union find
-    // feasibility
-    // 300^2x300^2x10
-    // rows^2 x columns^2 x max number
-    // BFS or DFS
-    // 81b => not feasible
     int ans=0;
 
     for(int curStep=1; curStep<600; ++curStep)
@@ -176,10 +151,6 @@ int main()
         }
     }
 
-    // printMat(M, N);
-
-    // solve
-    // solution(M, N);
     printf("%d\n", solution(M, N));
     return 0;
 }
