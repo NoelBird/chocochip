@@ -1,6 +1,4 @@
-// 272ms - seriously slow
-// TODO1: make circular queue
-// TODO2: change scanner
+// 4ms - optimized
 package main
 
 import (
@@ -18,6 +16,47 @@ type Point struct {
 	c uint8
 }
 
+type Queue struct {
+	data         [400]Point
+	start        int
+	end          int
+	maxQueueSize int
+}
+
+func (q *Queue) init() {
+	q.maxQueueSize = 400
+	q.start = 0
+	q.end = 0
+}
+
+func (q *Queue) push(p Point) {
+	q.data[q.end] = p
+	if q.end == q.maxQueueSize-1 {
+		q.end = 0
+	} else {
+		q.end++
+	}
+}
+
+func (q *Queue) pop() Point {
+	ret := q.data[q.start]
+	if q.start == q.maxQueueSize-1 {
+		q.start = 0
+	} else {
+		q.start++
+	}
+
+	return ret
+}
+
+func (q *Queue) len() int {
+	if q.end-q.start >= 0 {
+		return q.end - q.start
+	} else {
+		return q.maxQueueSize + q.end - q.start
+	}
+}
+
 func solve(N int, Mat [100][100]uint8) int {
 	MatVisited := [100][100]int{{0}}
 
@@ -30,13 +69,13 @@ func solve(N int, Mat [100][100]uint8) int {
 			}
 			cnt++
 
-			q := []Point{}
-			q = append(q, Point{j, i, Mat[i][j]})
+			q := Queue{}
+			q.init()
+			q.push(Point{j, i, Mat[i][j]})
 
-			for len(q) > 0 {
+			for q.len() > 0 {
 				// pop
-				cur := q[0]
-				q = q[1:]
+				cur := q.pop()
 				x := cur.x
 				y := cur.y
 				c := cur.c
@@ -50,16 +89,16 @@ func solve(N int, Mat [100][100]uint8) int {
 				}
 
 				if x > 0 && Mat[y][x-1] == c {
-					q = append(q, Point{x - 1, y, c})
+					q.push(Point{x - 1, y, c})
 				}
 				if x < N-1 && Mat[y][x+1] == c {
-					q = append(q, Point{x + 1, y, c})
+					q.push(Point{x + 1, y, c})
 				}
 				if y > 0 && Mat[y-1][x] == c {
-					q = append(q, Point{x, y - 1, c})
+					q.push(Point{x, y - 1, c})
 				}
 				if y < N-1 && Mat[y+1][x] == c {
-					q = append(q, Point{x, y + 1, c})
+					q.push(Point{x, y + 1, c})
 				}
 				MatVisited[y][x] = cnt
 			}
@@ -73,32 +112,25 @@ func main() {
 	Mat := [100][100]uint8{{0}}
 	MatBlind := [100][100]uint8{{0}}
 
-	_, err := fmt.Fscan(reader, &N)
+	_, err := fmt.Fscanln(reader, &N)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
-	var tmp uint8
 	for i := 0; i < N; i++ {
+		var str string
+		_, err := fmt.Fscanln(reader, &str)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
 		for j := 0; j < N; j++ {
-			_, err := fmt.Fscan(reader, &tmp)
-			if err != nil {
-				fmt.Println(err)
-				return
-			}
-			if tmp == '\r' || tmp == '\n' { // newline character
-				_, err := fmt.Scanf("%c", &tmp)
-				if err != nil {
-					fmt.Println(err)
-					return
-				}
-			}
-			Mat[i][j] = tmp
-			if tmp == 'G' {
+			Mat[i][j] = str[j]
+			if str[j] == 'G' {
 				MatBlind[i][j] = 'R'
 			} else {
-				MatBlind[i][j] = tmp
+				MatBlind[i][j] = str[j]
 			}
 		}
 	}

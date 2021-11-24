@@ -1,6 +1,5 @@
-// 272ms - seriously slow
+// 8ms - quite faster
 // TODO1: make circular queue
-// TODO2: change scanner
 package main
 
 import (
@@ -73,32 +72,25 @@ func main() {
 	Mat := [100][100]uint8{{0}}
 	MatBlind := [100][100]uint8{{0}}
 
-	_, err := fmt.Fscan(reader, &N)
+	_, err := fmt.Fscanln(reader, &N)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
-	var tmp uint8
 	for i := 0; i < N; i++ {
+		var str string
+		_, err := fmt.Fscanln(reader, &str)
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
 		for j := 0; j < N; j++ {
-			_, err := fmt.Fscan(reader, &tmp)
-			if err != nil {
-				fmt.Println(err)
-				return
-			}
-			if tmp == '\r' || tmp == '\n' { // newline character
-				_, err := fmt.Scanf("%c", &tmp)
-				if err != nil {
-					fmt.Println(err)
-					return
-				}
-			}
-			Mat[i][j] = tmp
-			if tmp == 'G' {
+			Mat[i][j] = str[j]
+			if str[j] == 'G' {
 				MatBlind[i][j] = 'R'
 			} else {
-				MatBlind[i][j] = tmp
+				MatBlind[i][j] = str[j]
 			}
 		}
 	}
