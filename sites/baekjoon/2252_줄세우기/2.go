@@ -1,4 +1,4 @@
-// too slow(1400ms) - because of io
+// 48ms
 package main
 
 import (
@@ -8,17 +8,18 @@ import (
 	"strings"
 )
 
-var reader = bufio.NewReader(os.Stdin)
-var writer = bufio.NewWriter(os.Stdout)
-
 type node struct {
 	outNode   []int
 	cntInNode int
 }
 
+const MAX_Q_LEN int = 32001
+
 func main() {
 	var N, M int
-	fmt.Fscanln(reader, &N, &M)
+	// fmt.Fscanln(reader, &N, &M)
+	N = nextInt()
+	M = nextInt()
 
 	graph := []node{}
 	graph = append(graph, node{[]int{}, -1}) // dummy node
@@ -30,7 +31,9 @@ func main() {
 
 	for i := 0; i < M; i++ {
 		var a, b int
-		fmt.Fscanln(reader, &a, &b)
+		a = nextInt()
+		b = nextInt()
+		// fmt.Fscanln(reader, &a, &b)
 		graph[a].outNode = append(graph[a].outNode, b)
 		graph[b].cntInNode++
 	}
@@ -48,16 +51,16 @@ func solve(graph []node) []int {
 
 	var result []int
 
-	q := make([]int, 0)
+	q := queue{}
+	q.init()
 
 	for i := 1; i < len(graph); i++ {
 		if graph[i].cntInNode == 0 {
-			q = append(q, i)
+			q.push(i)
 		}
 	}
-	for len(q) > 0 {
-		cur := q[0]
-		q = q[1:]
+	for q.len() > 0 {
+		cur := q.pop()
 
 		// save to result slice
 		result = append(result, cur)
@@ -67,10 +70,61 @@ func solve(graph []node) []int {
 			targetNode := graph[cur].outNode[i]
 			graph[targetNode].cntInNode--
 			if graph[targetNode].cntInNode == 0 {
-				q = append(q, targetNode)
+				q.push(targetNode)
 			}
 		}
 	}
 
 	return result
+}
+
+// io
+var scanner *bufio.Scanner
+
+func init() {
+	scanner = bufio.NewScanner(os.Stdin)
+	scanner.Split(bufio.ScanWords)
+}
+
+func nextInt() int {
+	scanner.Scan()
+	sign, x := 1, 0
+	for _, b := range scanner.Bytes() {
+		if b == '-' {
+			sign = -1
+			continue
+		}
+		x *= 10
+		x += int(b - '0')
+	}
+	return sign * x
+}
+
+// queue
+type queue struct {
+	data   [MAX_Q_LEN]int
+	maxlen int
+	start  int
+	end    int
+}
+
+func (q *queue) init() {
+	q.maxlen = MAX_Q_LEN
+	q.start = 0
+	q.end = 0
+}
+
+func (q *queue) push(n int) {
+	q.data[q.end] = n
+	q.end++
+}
+
+func (q *queue) pop() int {
+	popData := q.data[q.start]
+	q.start++
+	return popData
+}
+
+func (q *queue) len() int {
+	return q.end - q.start
 }
