@@ -10,3 +10,6 @@ boj/*/data.txt
 *.exe
 *.txt
 *.pb
+
+# rust
+target/
