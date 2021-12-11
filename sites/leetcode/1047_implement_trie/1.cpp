@@ -42,7 +42,25 @@ public:
     }
     
     bool search(string word) {
-        
+        Node* cur = root;
+        for(int idx=0; idx<word.size(); ++idx)
+        {
+            int isFound=false;
+            int i=0;
+            for(; i<26; ++i)
+            {
+                if(cur->_children[i]==nullptr) break;
+                if(cur->_children[i]->val==word[idx])
+                {
+                    isFound=true;
+                    break;
+                }
+            }
+            if(!isFound)
+            {
+                cur->_children[i] = new Node(word[idx]);
+            }
+        }
     }
     
     bool startsWith(string prefix) {
