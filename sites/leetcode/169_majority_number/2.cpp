@@ -1,3 +1,4 @@
+// boyer-moore voting algorithm
 // time: O(N), space: O(1)
 class Solution {
 public:
