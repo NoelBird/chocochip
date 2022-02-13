@@ -21,7 +21,7 @@ def get_diagonal(N, K):
 
 def generate_latin_square(N, K):
     M = np.diag(get_diagonal(N, K))
-    column_set = [set(c[c > 0]) for c in M.T]
+    column_set = [set(c[c > 0]) for c in M.T] # M.T: transpose of M, column_set: diagonal items
     values = [M[0, 0]] + list(set([M[-1, -1], M[-2, -2]]))
     values += list(set(range(1, N + 1)) - set(values))
 
