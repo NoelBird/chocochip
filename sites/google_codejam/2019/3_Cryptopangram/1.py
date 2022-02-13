@@ -65,17 +65,15 @@ for i in range(1, T+1):
     l = list(map(int, input().split()))
     func(N, L, l)
 """
+import sys
+sys.setrecursionlimit(10000000)
 
 def gcd(a, b):
-    return gcd(b, a%b) if b else a
+    if b==0:
+        return a
+    return gcd(b, a%b)
 
-import sys
-sys.setrecursionlimit(10000)
-
-
-T = int(input())
-
-def func(N, L, l):
+def func(tc, N, L, l):
     # 1. find prime number at index 0
     g = gcd(l[0], l[1])
     ll = [l[0]//g, g]
@@ -85,15 +83,16 @@ def func(N, L, l):
         ll.append(g)
 
     tt = sorted(list(set(ll)))
+    print(tt)
     d = {}
-    for j in range(len(tt)):
+    for j in range(26):
         d[tt[j]] = chr(65 + j)
-    sys.stdout.write("Case #{}: ".format(i))
-    for j in range(len(ll)):
+    sys.stdout.write("Case #{}: ".format(tc))
+    for j in range(L+1):
         sys.stdout.write(d[ll[j]])
     sys.stdout.write("\n")
 
-for i in range(1, T+1):
-    N, L = map(int, input().split())
-    l = list(map(int, input().split()))
-    func(N, L, l)
+for i in range(1, int(input())+1):
+    N, L = map(int, sys.stdin.readline().split())
+    l = list(map(int, sys.stdin.readline().split()))
+    func(i, N, L, l)
